@@ -1,9 +1,11 @@
-import React, {Fragment} from 'react'
-import { ListOfCategories } from './components/ListOfCategories'
-import { ListOfPhotoCards } from './containers/ListOfPhotoCards'
+import React from 'react'
 import { GlobalStyle } from './styles/GlobalStyles'
 import Logo from './components/Logo'
 import { PhotoCardWithQuery } from './containers/PhotoCardWithQuery'
+import { Home } from './pages/Home';
+
+import { BrowserRouter, Route, Switch} from 'react-router-dom'
+
 
 export const App = () => {
   const urlParams = new window.URLSearchParams(window.location.search)
@@ -18,10 +20,13 @@ export const App = () => {
       {
         detailId 
         ? <PhotoCardWithQuery id={detailId}/>
-        : <Fragment>
-            <ListOfCategories />
-            <ListOfPhotoCards categoryId = {2}/>
-        </Fragment>
+        : (<BrowserRouter>
+              <Switch>
+              <Route exact path='/' render={(props) => <Home {...props} />} />
+      <Route exact path='/pet/:id' render={(props) => <Home {...props} />} />
+              </Switch>
+            </BrowserRouter>
+          )
       }
       
     </div>

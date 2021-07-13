@@ -2,7 +2,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   output: {
-    filename: 'app.bundle.js'
+    filename: 'app.bundle.js',
+    publicPath: '/'
+  },
+  devServer: {
+    historyApiFallback: {
+      disableDotRule: true
+    },
+    liveReload: true
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -11,6 +18,11 @@ module.exports = {
   ],
   module: {
     rules: [
+      {
+        test: /\.(graphql|gql)$/,
+        exclude: /node_modules/,
+        loader: 'graphql-tag/loader'
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
